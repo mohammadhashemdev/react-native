@@ -5,7 +5,7 @@ const ComponentScreen = () => {
   const myName = "Mohammad Hashem";
   return (
     <View>
-      <Text style={styles.headerText}>Getting started with React Native!</Text>
+      <Text style={styles.headerText}>The Components page</Text>
       <Text style={styles.subheaderText}>My name is {myName}</Text>
     </View>
   );
