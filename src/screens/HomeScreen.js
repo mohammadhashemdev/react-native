@@ -15,6 +15,12 @@ const HomeScreen = ({ navigation }) => {
       />
       <Button onPress={() => goToPage("List")} title="Go to Lists page" />
       <Button onPress={() => goToPage("Images")} title="Go to Images page" />
+      <Button onPress={() => goToPage("Counter")} title="Go to Counter page" />
+      <Button onPress={() => goToPage("Color")} title="Go to Color page" />
+      <Button
+        onPress={() => goToPage("Square")}
+        title="Go to Square Screen page"
+      />
     </View>
   );
 };
