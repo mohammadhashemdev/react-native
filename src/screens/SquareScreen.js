@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import ColorCounter from "../components/ColorCounter";
 
 const COLOR_INCREMENT = 15;
+const initialState = { red: 0, green: 0, blue: 0 };
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -26,7 +27,15 @@ const reducer = (state, action) => {
 };
 
 const SquareScreen = () => {
-  const [state, dispatch] = useReducer(reducer, { red: 0, green: 0, blue: 0 });
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const getColor = () => {
+    const { red, green, blue } = state;
+    return {
+      ...styles.colorBox,
+      backgroundColor: `rgb(${red}, ${green}, ${blue})`,
+    };
+  };
 
   return (
     <View>
@@ -58,14 +67,7 @@ const SquareScreen = () => {
         color="Blue"
       />
 
-      <View
-        style={[
-          styles.colorBox,
-          {
-            backgroundColor: `rgb(${state.red}, ${state.green}, ${state.blue})`,
-          },
-        ]}
-      ></View>
+      <View style={getColor()}></View>
     </View>
   );
 };
