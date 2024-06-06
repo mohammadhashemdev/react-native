@@ -59,18 +59,24 @@ const SquareScreen = () => {
       />
 
       <View
-        style={{
-          margin: 10,
-          height: 100,
-          width: 100,
-          backgroundColor: `rgb(${state.red}, ${state.green}, ${state.blue})`,
-          marginHorizontal: "auto",
-        }}
+        style={[
+          styles.colorBox,
+          {
+            backgroundColor: `rgb(${state.red}, ${state.green}, ${state.blue})`,
+          },
+        ]}
       ></View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  colorBox: {
+    margin: 10,
+    height: 100,
+    width: 100,
+    marginHorizontal: "auto",
+  },
+});
 
 export default SquareScreen;
