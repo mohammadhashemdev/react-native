@@ -21,6 +21,7 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => goToPage("Square")}
         title="Go to Square Screen page"
       />
+      <Button onPress={() => goToPage("Text")} title="Go to Text input page" />
     </View>
   );
 };
