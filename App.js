@@ -1,31 +1,27 @@
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import HomeScreen from "./src/screens/HomeScreen";
-import ComponentScreen from "./src/screens/ComponentScreen";
-import ListScreen from "./src/screens/ListScreen";
-import ImageScreen from "./src/screens/ImageScreen";
-import CounterScreen from "./src/screens/CounterScreen";
-import ColorScreen from "./src/screens/ColorScreen";
-import SquareScreen from "./src/screens/SquareScreen";
-import TextScreen from "./src/screens/TextScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import SearchScreen from "./src/screens/SearchScreen";
+import ShowResultsScreen from "./src/screens/ShowResultsScreen";
 
-const navigator = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Components: ComponentScreen,
-    List: ListScreen,
-    Images: ImageScreen,
-    Counter: CounterScreen,
-    Color: ColorScreen,
-    Square: SquareScreen,
-    Text: TextScreen,
-  },
-  {
-    initialRouteName: "Home",
-    defaultNavigationOptions: {
-      title: "App",
-    },
-  }
-);
+const Stack = createNativeStackNavigator();
 
-export default createAppContainer(navigator);
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          options={{ title: "Business Search" }}
+          name="Home"
+          component={SearchScreen}
+        />
+        <Stack.Screen
+          options={{ title: "Restaurant" }}
+          name="Business"
+          component={ShowResultsScreen}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
