@@ -1,27 +1,43 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SearchScreen from "./src/screens/SearchScreen";
-import ShowResultsScreen from "./src/screens/ShowResultsScreen";
+
+import IndexScreen from "./src/screens/IndexScreen";
+import { Provider } from "./src/context/BlogContext";
+import ShowBlogScreen from "./src/screens/ShowBlogScreen";
+import CreateScreen from "./src/screens/CreateScreen";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Index">
         <Stack.Screen
-          options={{ title: "Business Search" }}
-          name="Home"
-          component={SearchScreen}
+          options={{
+            title: "Blogs",
+          }}
+          name="Index"
+          component={IndexScreen}
         />
         <Stack.Screen
-          options={{ title: "Restaurant" }}
-          name="Business"
-          component={ShowResultsScreen}
+          options={{ title: "Post" }}
+          name="ShowBlog"
+          component={ShowBlogScreen}
+        />
+        <Stack.Screen
+          options={{ title: "Create Post" }}
+          name="CreateScreen"
+          component={CreateScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default App;
+export default () => {
+  return (
+    <Provider>
+      <App />
+    </Provider>
+  );
+};
