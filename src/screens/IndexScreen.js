@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const IndexScreen = () => {
   const navigation = useNavigation();
-  const { state, addBlogPost, deleteBlogPost } = useContext(Context);
+  const { state, deleteBlogPost } = useContext(Context);
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -28,10 +28,9 @@ const IndexScreen = () => {
 
   return (
     <View>
-      <Button title="Add Blog Post" onPress={() => addBlogPost()} />
       <FlatList
         data={state}
-        keyExtractor={(blog) => blog.title}
+        keyExtractor={(blog) => blog.id}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate("ShowBlog", { id: item.id })}
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     paddingVertical: 10,
-    backgroundColor: "#d9d6d4",
+    backgroundColor: "#ffffff",
     marginTop: 4,
     marginHorizontal: 5,
     borderRadius: 5,
