@@ -1,5 +1,8 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { TouchableOpacity, useColorScheme } from "react-native";
+import { Entypo } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 import IndexScreen from "./src/screens/IndexScreen";
 import { Provider } from "./src/context/BlogContext";
@@ -14,14 +17,32 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Index">
         <Stack.Screen
-          options={{
+          options={({ navigation }) => ({
             title: "Blogs",
-          }}
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("CreateScreen")}
+              >
+                <Entypo name="add-to-list" size={24} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
           name="Index"
           component={IndexScreen}
         />
         <Stack.Screen
-          options={{ title: "Post" }}
+          options={({ navigation, route }) => ({
+            title: "Post",
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("EditScreen", { id: route.params.id })
+                }
+              >
+                <Feather name="edit-3" size={24} color="black" />
+              </TouchableOpacity>
+            ),
+          })}
           name="ShowBlog"
           component={ShowBlogScreen}
         />

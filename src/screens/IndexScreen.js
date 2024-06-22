@@ -1,30 +1,28 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
-  Button,
   TouchableOpacity,
 } from "react-native";
-import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Context } from "../context/BlogContext";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 const IndexScreen = () => {
   const navigation = useNavigation();
-  const { state, deleteBlogPost } = useContext(Context);
+  const { state, deleteBlogPost, getBlogPosts } = useContext(Context);
 
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity onPress={() => navigation.navigate("CreateScreen")}>
-          <Entypo name="add-to-list" size={24} color="black" />
-        </TouchableOpacity>
-      ),
-    });
-  }, [navigation]);
+  useEffect(() => {
+    getBlogPosts();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      getBlogPosts();
+    }, [])
+  );
 
   return (
     <View>
