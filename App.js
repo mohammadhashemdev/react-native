@@ -1,6 +1,6 @@
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { TouchableOpacity, useColorScheme } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 
