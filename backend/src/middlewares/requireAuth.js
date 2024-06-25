@@ -1,31 +1,31 @@
+const { promisify } = require("util");
 const jwt = require("jsonwebtoken");
 const User = require("./../models/usersModel");
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.status(401).json({
-      status: "failed",
-      message: "You are not logged in",
-    });
+    return res.status(401).send("You are not logged in");
   }
 
   const token = authorization.split(" ")[1];
-  jwt.verify(token, "MY_SUPER_SECRET_KEY", async (error, payload) => {
-    if (error) {
-      return res.status(401).json({
-        status: "failed",
-        message: "You are not logged in.",
-      });
+  try {
+    const decodedToken = await promisify(jwt.verify)(
+      token,
+      "MY_SUPER_SECRET_KEY"
+    );
+
+    const currentUser = await User.findById(decodedToken.userId);
+    if (!currentUser) {
+      return res
+        .status(401)
+        .send("The user belonging to this token no longer exists");
     }
 
-    const { userId } = payload;
-
-    const user = await User.findById(userId);
-
-    req.user = user;
-
+    req.user = currentUser;
     next();
-  });
+  } catch (err) {
+    res.status(401).send({ error: err.message });
+  }
 };

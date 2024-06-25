@@ -12,7 +12,7 @@ router.post("/signup", async (req, res, next) => {
 
     const token = jwt.sign({ userId: newUser._id }, "MY_SUPER_SECRET_KEY");
 
-    res.status(201).send("User created successfully");
+    res.status(201).send({ token });
   } catch (error) {
     return res.send(error.message);
   }
@@ -20,7 +20,7 @@ router.post("/signup", async (req, res, next) => {
   next();
 });
 
-router.post("/signin", async (req, res, next) => {
+router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -36,7 +36,7 @@ router.post("/signin", async (req, res, next) => {
 
     const token = jwt.sign({ userId: user._id }, "MY_SUPER_SECRET_KEY");
 
-    res.send({ token });
+    res.status(200).send({ token });
   } catch (error) {
     return res.send(error.message);
   }

@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const authRoutes = require("./routes/authRoutes");
 const requireAuth = require("./middlewares/requireAuth");
+const authRoutes = require("./routes/authRoutes");
+const trackRoutes = require("./routes/trackRoutes");
 
 const app = express();
 
@@ -15,10 +16,9 @@ mongoose.connection.on("connected", () => {
 
 // body parser
 app.use(express.json());
+
 app.use("/", authRoutes);
-app.get("/", requireAuth, (req, res) => {
-  res.send("hello there");
-});
+app.use("/", requireAuth, trackRoutes);
 
 mongoose.connection.on("error", (error) => {
   console.log("Error occured while connecting the DB", error);
