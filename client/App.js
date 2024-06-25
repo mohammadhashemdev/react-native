@@ -1,20 +1,88 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
-export default function App() {
+import { Ionicons } from "@expo/vector-icons";
+
+import AccountScreen from "./src/screens/bottomTab/AccountScreen";
+import SigninScreen from "./src/screens/stack/SigninScreens";
+import SignupScreen from "./src/screens/stack/SignupScreen";
+import TrackCreateScreen from "./src/screens/bottomTab/TrackCreateScreen";
+import TrackDetailScreen from "./src/screens/bottomTab/TrackDetailScreen";
+import TrackListScreen from "./src/screens/bottomTab/TrackListScreen";
+
+const Stack = createNativeStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
+
+const StackNavigator = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Stack.Navigator initialRouteName="TrackListScreen">
+      <Stack.Screen name="TrackListScreen" component={TrackListScreen} />
+      <Stack.Screen name="TrackDetailScreen" component={TrackDetailScreen} />
+    </Stack.Navigator>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const BottomTab = () => {
+  return (
+    <Tab.Navigator
+      inactiveColor="grey"
+      activeColor="darkblue"
+      activeIndicatorStyle={{ backgroundColor: "#D6E9FF" }}
+      barStyle={{ backgroundColor: "white" }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ color, focused }) => {
+          let iconName;
+
+          if (route.name === "TrackList") {
+            iconName = focused ? "map-sharp" : "map-outline";
+          } else if (route.name === "TrackCreate") {
+            iconName = focused ? "create-sharp" : "create-outline";
+          } else if (route.name === "AccountScreen") {
+            iconName = focused ? "person" : "person-outline";
+          }
+          return <Ionicons name={iconName} size={20} color={color} />;
+        },
+        tabBarStyle: {
+          paddingVertical: 10,
+          height: 60,
+        },
+      })}
+    >
+      <Tab.Screen
+        name="TrackList"
+        component={StackNavigator}
+        options={{ tabBarLabel: "Tracks" }}
+      />
+      <Tab.Screen
+        name="TrackCreate"
+        component={TrackCreateScreen}
+        options={{ tabBarLabel: "Create" }}
+      />
+      <Tab.Screen
+        name="AccountScreen"
+        component={AccountScreen}
+        options={{ tabBarLabel: "Account" }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const App = () => {
+  const isLoggedIn = true;
+
+  return (
+    <NavigationContainer>
+      {isLoggedIn ? (
+        <BottomTab />
+      ) : (
+        <Stack.Navigator initialRouteName="SignupScreen">
+          <Stack.Screen name="SigninScreen" component={SigninScreen} />
+          <Stack.Screen name="SignupScreen" component={SignupScreen} />
+        </Stack.Navigator>
+      )}
+    </NavigationContainer>
+  );
+};
+
+export default App;
