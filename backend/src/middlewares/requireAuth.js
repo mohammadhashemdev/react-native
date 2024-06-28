@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    return res.status(401).send("You are not logged in");
+    return res.status(401).send({ error: "You are not logged in" });
   }
 
   const token = authorization.split(" ")[1];
@@ -17,10 +17,11 @@ module.exports = async (req, res, next) => {
     );
 
     const currentUser = await User.findById(decodedToken.userId);
+
     if (!currentUser) {
       return res
         .status(401)
-        .send("The user belonging to this token no longer exists");
+        .send({ error: "The user belonging to this token no longer exists" });
     }
 
     req.user = currentUser;

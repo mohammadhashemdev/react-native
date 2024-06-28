@@ -1,7 +1,7 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, Text, Button } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Context as AuthContext } from "./../../../context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
 
 const TrackListScreen = () => {
   const navigation = useNavigation();
@@ -9,7 +9,7 @@ const TrackListScreen = () => {
     <View>
       <Text style={styles.textStyle}>Track List Screen</Text>
       <Button
-        title="go to details"
+        title="Detail Screen"
         onPress={() => navigation.navigate("TrackDetailScreen")}
       />
     </View>

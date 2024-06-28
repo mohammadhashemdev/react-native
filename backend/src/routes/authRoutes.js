@@ -4,7 +4,7 @@ const User = require("./../models/usersModel");
 
 const router = express.Router();
 
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -16,8 +16,6 @@ router.post("/signup", async (req, res, next) => {
   } catch (error) {
     return res.send(error.message);
   }
-
-  next();
 });
 
 router.post("/signin", async (req, res) => {

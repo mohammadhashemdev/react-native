@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
@@ -10,6 +11,10 @@ import SignupScreen from "./src/screens/stack/SignupScreen";
 import TrackCreateScreen from "./src/screens/bottomTab/TrackCreateScreen";
 import TrackDetailScreen from "./src/screens/bottomTab/TrackDetailScreen";
 import TrackListScreen from "./src/screens/bottomTab/TrackListScreen";
+import {
+  Provider as AuthProvider,
+  Context as AuthContext,
+} from "./context/AuthContext";
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -69,20 +74,38 @@ const BottomTab = () => {
 };
 
 const App = () => {
-  const isLoggedIn = true;
+  const { state, tryLocalSignin } = useContext(AuthContext);
+
+  useEffect(() => {
+    tryLocalSignin();
+  }, []);
 
   return (
     <NavigationContainer>
-      {isLoggedIn ? (
+      {state.token ? (
         <BottomTab />
       ) : (
-        <Stack.Navigator initialRouteName="SignupScreen">
-          <Stack.Screen name="SigninScreen" component={SigninScreen} />
-          <Stack.Screen name="SignupScreen" component={SignupScreen} />
+        <Stack.Navigator initialRouteName="SigninScreen">
+          <Stack.Screen
+            name="SigninScreen"
+            component={SigninScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="SignupScreen"
+            component={SignupScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>
   );
 };
 
-export default App;
+export default () => {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+};
