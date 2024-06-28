@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "food-project",
-    "slug": "food-project",
+    "name": "maptracker",
+    "slug": "maptracker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
